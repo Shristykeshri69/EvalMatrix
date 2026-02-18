@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/jobs67.css' %}">
+
+  <style>
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
+    img {
+      height: 200px;
+      width: 350px;
+      border: 5px solid red; /* ✅ fixed */
+      margin: 10px;          /* ✅ spacing */
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chennai Jobs Information</h1>
+
+  <!-- Images -->
+  <div class="text-center">
+    <img src="{% static 'images/chn-1.jpg' %}" alt="Image 1">
+    <img src="{% static 'images/chn-2.jpg' %}" alt="Image 2">
+    <img src="{% static 'images/chn-3.jpg' %}" alt="Image 3">
+    <img src="{% static 'images/chn-4.jpg' %}" alt="Image 4">
+  </div>
+
+  <hr>
+
+  <!-- Jobs table -->
+ 
+
+
+
+     {% if jobs_list %}
+   <table>
+    <thead>
+        <th>Date</th>
+        <th>Company</th>
+        <th>title</th>
+        <th>Eligibility</th>
+        <th>Address</th>
+        <th>Email</th>  
+        <th>Phonenumber</th>
+    </thead> 
+
+          {% for job in jobs_list %}
+          <tr>
+            <td>{{job.date}}</td>
+            <td>{{job.company}}</td>
+            <td>{{job.title}}</td>
+            <td>{{job.eligibility}}</td>
+            <td>{{job.address}}</td>
+            <td>{{job.email}}</td>
+            <td>{{job.Phonenumber}}</td>
+          </tr>
+
+          {% endfor %}
+     </table>
+
+    <!-- Pagination (separate file included here) -->
+    
+    {% include "jobsapp/paginator.html" %}
+
+  </div>
+  {% else %}
+    <p class="text-center text-danger">No Jobs found in Chennai</p>
+  {% endif %}
+</body>
+</html>

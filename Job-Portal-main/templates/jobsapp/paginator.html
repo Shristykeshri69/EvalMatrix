@@ -1,0 +1,35 @@
+<div class="pagination text-center">
+  {% if jobs_list.has_previous %}
+    <a href="?page=1">First</a>
+    <a href="?page={{ jobs_list.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  <span>Page {{ jobs_list.number }} of {{ jobs_list.paginator.num_pages }}</span>
+
+  {% if jobs_list.has_next %}
+    <a href="?page={{ jobs_list.next_page_number }}">Next</a>
+    <a href="?page={{ jobs_list.paginator.num_pages }}">Last</a>
+  {% endif %}
+</div>
+
+<style>
+  .pagination {
+    margin-top: 20px;
+  }
+  .pagination a {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  .pagination a:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  .pagination span {
+    margin: 0 8px;
+    font-weight: bold;
+  }
+</style>

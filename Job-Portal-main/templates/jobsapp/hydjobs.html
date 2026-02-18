@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/jobs67.css' %}"> 
+    <style>
+        h1{
+            text-align: center;
+            
+        }
+      
+ 
+
+    </style>
+   
+</head>
+<body>
+   <h1>Hyderabad Jobs Information </h1>
+   <img src=" {% static 'images/hyd1.jpg '%}" alt="OOPS,IMAGE NOT FOUND">
+      <img src=" {% static 'images/hyd-1.jpg '%}" alt="OOPS,IMAGE NOT FOUND">
+         <img src=" {% static 'images/hyd-2.jpg '%}" alt="OOPS,IMAGE NOT FOUND">
+            <img src=" {% static 'images/hyd-3.jpg '%}" alt="OOPS,IMAGE NOT FOUND">
+   <hr>
+   {% if jobs_list %}
+   <table>
+    <thead>
+        <th>Date</th>
+        <th>Company</th>
+        <th>title</th>
+        <th>Eligibility</th>
+        <th>Address</th>
+        <th>Email</th>  
+        <th>Phonenumber</th>
+    </thead> 
+
+          {% for job in jobs_list %}
+          <tr>
+            <td>{{job.date}}</td>
+            <td>{{job.company}}</td>
+            <td>{{job.title}}</td>
+            <td>{{job.eligibility}}</td>
+            <td>{{job.address}}</td>
+            <td>{{job.email}}</td>
+            <td>{{job.Phonenumber}}</td>
+          </tr>
+
+          {% endfor %}
+     </table>
+
+       {% else %}
+       <id='special p'>
+        <p>No Jobs found in Hyderabad</p>
+         {% endif %}
+    
+</body>
+</html>

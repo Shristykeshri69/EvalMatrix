@@ -1,0 +1,50 @@
+
+.container{
+    margin-top:200px;
+    text-align: centre;
+}
+.container .jumbotron{
+    background:aqua;
+    color:black;
+
+}
+.jumbotron a{
+    background:yellow;
+    color:red;
+    border:2px solid green;
+}
+  img {
+  height: 200px;
+  width: 400px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: red;
+ 
+  margin-left: 10px;
+  margin-right: 10px ;
+  
+}
+table,thead,td,tr{
+    background: red;
+    color:yellow;
+    border:3px solid white;
+    font-size:25px;
+    table-layout: center;
+}
+th{
+    background-color: blue;
+}
+#special p{
+    margin:auto;
+   color:white;
+    
+
+}
+html{
+    height: 100px;
+}
+h1{
+    font-size: 30px ;
+    text-align: center;
+    background-color: chocolate;
+}

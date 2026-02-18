@@ -1,0 +1,126 @@
+
+
+
+{% extends 'exams/base.html' %}
+
+{% block body_block %}
+
+<div class="container">
+    <h2>{{ exam.title }}</h2>
+    <hr>
+
+     <div class="alert alert-danger text-center">
+        Time Remaining: <span id="timer"></span>
+    </div>
+
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for question in questions %}
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Q{{ forloop.counter }}: {{ question.text }}
+                </div>
+                <div class="panel-body">
+                    {% for option in question.option_set.all %}
+                        <p>
+                            <input type="radio" 
+                                   name="question_{{ question.id }}" 
+                                   value="{{ option.id }}">
+                            {{ option.text }}
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-success">
+            Submit Exam
+        </button>
+    </form>
+</div>
+
+<script>
+    var timeInMinutes = {{exam.duration }};
+    var totalSeconds = timeInMinutes * 60;
+
+    var timerDisplay = document.getElementById("timer");
+
+    var countdown = setInterval(function () {
+
+        var minutes = Math.floor(totalSeconds / 60);
+        var seconds = totalSeconds % 60;
+
+        timerDisplay.innerHTML = minutes + "m " + seconds + "s";
+
+        if (totalSeconds <= 0) {
+            clearInterval(countdown);
+            alert("Time is up! Submitting exam...");
+            document.querySelector("form").submit();
+        }
+
+        totalSeconds--;
+
+    }, 1000);
+
+
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+            fetch("{% url 'log_activity' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: "activity_type=Tab Switched&exam_id={{ exam.id }}"
+            });
+        }
+    });
+
+
+
+
+    // Detect page refresh
+    window.addEventListener("beforeunload", function () {
+        navigator.sendBeacon("{% url 'log_activity' %}", 
+            new URLSearchParams({
+                activity_type: "Page Refresh or Close",
+                exam_id: "{{ exam.id }}"
+            })
+        );
+    });
+
+
+    let warningCount = 0;
+    const maxWarnings = 3;
+
+    document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+
+            warningCount++;
+
+            // Log to backend
+            fetch("{% url 'log_activity' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: "activity_type=Tab Switched (" + warningCount + ")&exam_id={{ exam.id }}"
+            });
+
+            if (warningCount < maxWarnings) {
+                alert("⚠ Warning " + warningCount + 
+                      ": You switched tabs. After 3 warnings, exam will be auto-submitted.");
+            } else {
+                alert("🚨 Maximum warnings reached. Exam will be submitted now.");
+                document.querySelector("form").submit();
+            }
+        }
+    });
+
+</script>
+
+
+{% endblock %}

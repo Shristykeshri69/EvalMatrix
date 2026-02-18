@@ -1,0 +1,35 @@
+{% extends 'exams/base.html' %}
+
+{% block body_block %}
+
+<div class="container">
+    <h2>My Exam Results</h2>
+    <hr>
+
+    {% if attempts %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Exam</th>
+                    <th>Score</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attempt in attempts %}
+                <tr>
+                    <td>{{ attempt.exam.title }}</td>
+                    <td>{{ attempt.score }}</td>
+                    <td>{{ attempt.total }}</td>
+                    <td>{{ attempt.attempted_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You have not attempted any exams yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

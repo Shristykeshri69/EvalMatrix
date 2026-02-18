@@ -1,0 +1,44 @@
+{% extends 'exams/base.html' %}
+
+{% block body_block %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Welcome to ExamShield</h1>
+        <h3>Please Read the Instructions Carefully:</h3>
+
+        <ul>
+            <li>You can attempt only one exam per day.</li>
+            <li>Each exam has a fixed time limit.</li>
+            <li>Do not refresh or close the browser during the exam.</li>
+            <li>Each question carries equal marks unless specified.</li>
+            <li>Once submitted, the exam cannot be retaken.</li>
+            <li>Ensure stable internet connection.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Available Exams</h2>
+    <hr>
+
+    {% for exam in exams %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>{{ exam.title }}</h3>
+            </div>
+            <div class="panel-body">
+                Duration: {{ exam.duration }} minutes
+                <br><br>
+                <a href="{% url 'start_exam' exam.id %}" 
+                   class="btn btn-primary">
+                   Start Exam
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <p>No exams available.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'exams/base.html' %}
+
+{% block body_block %}
+
+<div class="container">
+    <h2>Exam Completed!</h2>
+    <hr>
+
+    <h3>{{ exam.title }}</h3>
+
+    <p><strong>Your Score:</strong> {{ score }} / {{ total }}</p>
+
+    <a href="{% url 'home' %}" class="btn btn-primary">
+        Go Back to Home
+    </a>
+</div>
+
+{% endblock %}
